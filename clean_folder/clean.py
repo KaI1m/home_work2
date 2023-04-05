@@ -41,7 +41,8 @@ def handle_folder(folder: Path):
         print(f'Помилка видалення папки {folder}')
 
 
-def main(folder: Path):
+def main_scan(folder: Path):
+    
     parser.scan(folder)
     for file in parser.JPEG_IMAGES:
         handle_media(file, folder / 'images' / 'JPEG')
@@ -96,12 +97,16 @@ def main(folder: Path):
         handle_folder(folder)
 
 
-if __name__ == '__main__':
-    if sys.argv[1]:
+def main():
+    try:
         folder_for_scan = Path(sys.argv[1])
         print(f'Start in folder {folder_for_scan.resolve()}')
-        main(folder_for_scan.resolve())
+        main_scan(folder_for_scan.resolve())
+    except IndexError:
+        print('Script need path to folder as parameter')
 
+if __name__ == '__main__':
+    main()
 
 # Щоб запустити програму необхідно в одному проєкті мати "clean.py""normolize.py""file_parser.py"
 # Запуск у консоли: python 3 clean.py "Шлях до папки сортування"
